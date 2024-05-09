@@ -23,4 +23,8 @@ The task of the project is first to review existing explanation methods for audi
 4. [Interpretable image recognition with hierarchical prototypes](https://arxiv.org/pdf/1906.10651).
 5. [Deep Learning for Case-Based Reasoning through Prototypes: A Neural Network that Explains Its Predictions](https://arxiv.org/pdf/1710.04806).
 6. [Example or Prototype? Learning ConceptBased Explanations in Time-Series](https://proceedings.mlr.press/v189/obermair23a/obermair23a.pdf).
+7. [Prototype learning for interpretable respiratory sound analysis](https://arxiv.org/pdf/2110.03536).
+8. [An interpretable deep learning model for automatic sound classification](https://www.semanticscholar.org/reader/102c62fa64530f14da1b782e92c47b42bcfa6cca).
+9. [“Toward interpretable polyphonic sound event detection with attention maps based on local prototypes](https://repositori.upf.edu/bitstream/handle/10230/49196/Zinemanas_DCASE2021tow.pdf?sequence=1&isAllowed=y).
+   
 
