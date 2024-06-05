@@ -43,18 +43,3 @@ class GTZAN(Dataset):
             image = self.transform(image)
 
         return image, torch.tensor(label).long()
-
-if __name__ == '__main__':
-    ds = GTZAN()
-    sample_loader = torch.utils.data.DataLoader(
-        ds,
-        batch_size=5,
-        shuffle=False
-    )
-
-    iterator = iter(sample_loader)
-    images, labels = next(iterator)
-
-    print(images.shape)
-    print(labels.shape)
-    print(len(ds))
