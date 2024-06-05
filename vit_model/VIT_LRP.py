@@ -217,7 +217,7 @@ class Attention(nn.Module):
         attn = self.attn_drop(attn)
 
         self.save_attn(attn) # WE SAVE THE ATTENTION
-        if not attn.requires_grad:
+        if attn.requires_grad:
             attn.register_hook(self.save_attn_gradients)
 
         out = self.matmul2([attn, v])
@@ -495,7 +495,7 @@ class VisionTrasformer(nn.Module):
         x = torch.cat((cls_tokens, x), dim=1)
         x = self.add([x, self.pos_embed])
 
-        if not x.requires_grad:
+        if x.requires_grad:
             x.register_hook(self.save_inp_grad)
 
         for blk in self.blocks:

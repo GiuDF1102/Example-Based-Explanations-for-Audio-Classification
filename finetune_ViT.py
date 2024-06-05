@@ -21,6 +21,8 @@ class FineTuneViT:
         self.criterion = nn.CrossEntropyLoss()
         self.optimizer = optim.Adam(self.model.parameters(), lr=self.learning_rate)
 
+        self.best_val_accuracy = 0.0  # Track the best validation accuracy
+
     def load_dataset(self):
         ds = GTZAN()
 
@@ -64,7 +66,12 @@ class FineTuneViT:
             epoch_loss = running_loss / len(self.train_loader.dataset)
             print(f"Epoch {epoch + 1}/{self.num_epochs}, Loss: {epoch_loss:.4f}")
 
-            self.validate()
+            val_accuracy = self.validate()
+
+            # Save the model if the validation accuracy is the best we've seen so far
+            if val_accuracy > self.best_val_accuracy:
+                self.best_val_accuracy = val_accuracy
+                self.save_model(f"best_model_epoch_{epoch + 1}.pth")
 
     def validate(self):
         self.model.eval()
@@ -81,6 +88,7 @@ class FineTuneViT:
 
         accuracy = running_corrects.double() / len(self.val_loader.dataset)
         print(f"Validation Accuracy: {accuracy:.4f}")
+        return accuracy
 
     def test(self):
         self.model.eval()
@@ -97,6 +105,10 @@ class FineTuneViT:
 
         accuracy = running_corrects.double() / len(self.test_loader.dataset)
         print(f"Test Accuracy: {accuracy:.4f}")
+
+    def save_model(self, path):
+        torch.save(self.model.state_dict(), path)
+        print(f"Model saved to {path}")
 
 if __name__ == '__main__':
     finetuner = FineTuneViT(model_name='vit_base_patch16_224', num_classes=10, dataset_path='../data/images_original')
