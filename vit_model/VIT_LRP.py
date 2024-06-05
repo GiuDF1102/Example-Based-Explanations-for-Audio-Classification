@@ -4,9 +4,9 @@ from einops import rearrange
 # from functools import partial
 from vit_model.modules.layers_ours import *
 
-from baselines.ViT.layer_helpers import to_2tuple
-from baselines.ViT.weight_init import trunc_normal_
-from baselines.ViT.helpers import load_pretrained
+from .baselines.ViT.layer_helpers import to_2tuple
+from .baselines.ViT.weight_init import trunc_normal_
+from .baselines.ViT.helpers import load_pretrained
 
 def _cfg(url='', **kwargs):
     return {
