@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 from einops import rearrange
 # from functools import partial
-from modules.layers_ours import *
+from vit_model.modules.layers_ours import *
 
 from baselines.ViT.layer_helpers import to_2tuple
 from baselines.ViT.weight_init import trunc_normal_
