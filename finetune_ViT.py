@@ -66,8 +66,6 @@ class FineTuneViT:
 
             self.validate()
 
-        self.test()
-
     def validate(self):
         self.model.eval()
         running_corrects = 0
@@ -103,3 +101,4 @@ class FineTuneViT:
 if __name__ == '__main__':
     finetuner = FineTuneViT(model_name='vit_base_patch16_224', num_classes=10, dataset_path='../data/images_original')
     finetuner.train()
+    finetuner.test()
