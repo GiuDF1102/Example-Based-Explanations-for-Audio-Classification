@@ -28,3 +28,5 @@ The task of the project is first to review existing explanation methods for audi
 9. [Toward interpretable polyphonic sound event detection with attention maps based on local prototypes](https://repositori.upf.edu/bitstream/handle/10230/49196/Zinemanas_DCASE2021tow.pdf?sequence=1&isAllowed=y).
    
 
+# Implementation
+Vision Transformer finetuned on GTZAN -> 74.5% accuracy on validation, 70% accuracy on test (best_model_epoch_10.pth), more of this would bring to overfitting.
