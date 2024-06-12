@@ -2,7 +2,7 @@ import librosa
 import numpy as np
 import random
 import zipfile
-
+import math
 
 class AudioPreprocessor:
     def __init__(self, sample_rate=22050, duration=10, hop_length_factor=31.25, n_fft=512, mono = True):
@@ -40,6 +40,13 @@ class AudioPreprocessor:
             ref=np.max
         )
         return log_spec
+
+    def add_noise_to_audio(self, audio, snr_db):
+        rms_signal = math.sqrt(np.mean(audio ** 2))
+        rms_noise = rms_signal / (10 ** (snr_db / 20))
+        noise = np.random.normal(0, rms_noise, audio.shape[0])
+        return audio + noise
+
     
 def extract_zip(zip_file, extract_to):
     with zipfile.ZipFile(zip_file, 'r') as zip_ref:

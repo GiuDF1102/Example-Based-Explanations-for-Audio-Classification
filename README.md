@@ -29,4 +29,20 @@ The task of the project is first to review existing explanation methods for audi
    
 
 # Implementation
-Vision Transformer finetuned on GTZAN -> 74.5% accuracy on validation, 70% accuracy on test (best_model_epoch_10.pth), more of this would bring to overfitting.
+Vision Transformer finetuned on GTZAN 1600x224-> 82% accuracy on validation 
+
+# Evaluation
+## Robustness/Sensitivity
+- Inserimento di rumore per analizzare la robustezza del modello a variazioni nei samples. (Quanto la spiegazione è sensibile a piccole variazioni?)
+We can see a degradation as noise becomes stronger
+Original -> 82% (7 Epochs)
+SNR 5 -> 30%
+SNR 10 -> 48%
+SNR 15 -> 54%
+SNR 20 -> 56%
+
+## Faithfulness TODO
+- Eliminazione delle frequenze importanti per l'explanation. (Quanto il modello si affida a quelle features?)
+
+## Plausibility TODO 
+- User study per risultati qualitativi (3 utenti, ovvero noi).
