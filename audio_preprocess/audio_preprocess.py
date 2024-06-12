@@ -12,23 +12,25 @@ class AudioPreprocessor:
         self.n_fft = n_fft
         self.mono = mono
         
-    def load_audio(self, file_path):
+    def load_audio(self, file_path, select_section = True):
         # Load audio file
         signal = librosa.load(file_path, 
                               sr=self.sample_rate, 
                               duration=self.duration, 
                               mono=self.mono)[0]
-        
-        start_position = random.randint(0, len(signal) - self.sample_rate * self.duration)
-        audio_section = signal[start_position:start_position + self.sample_rate * self.duration]
-
-        return audio_section
+        if select_section:
+            start_position = random.randint(0, len(signal) - self.sample_rate * self.duration)
+            audio_section = signal[start_position:start_position + self.sample_rate * self.duration]
+            return audio_section
+        return signal
+    
 
     def normalize_amplitude(self, audio_signal):
         # Normalize amplitude
         max_val = np.max(np.abs(audio_signal))
         normalized_signal = audio_signal / max_val
         return normalized_signal
+    
     
     def compute_log_spectrogram(self, audio_signal):
         # Compute log spectrogram
@@ -42,3 +44,4 @@ class AudioPreprocessor:
 def extract_zip(zip_file, extract_to):
     with zipfile.ZipFile(zip_file, 'r') as zip_ref:
         zip_ref.extractall(extract_to)
+        

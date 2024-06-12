@@ -84,16 +84,15 @@ def resume_checkpoint(model, checkpoint_path, optimizer=None, loss_scaler=None, 
         raise FileNotFoundError()
 
 
-def load_pretrained(model, cfg=None, num_classes=10, in_chans=3, filter_fn=None, strict=True):
-
+def load_pretrained(model, cfg=None, num_classes=1000, in_chans=3, filter_fn=None, strict=True):
     if cfg is None:
         cfg = getattr(model, 'default_cfg')
-        state_dict = load_state_dict(checkpoint_path = './best_model_epoch_10.pth')
+    #     state_dict = load_state_dict(checkpoint_path = './best_model_epoch_10.pth')
     elif cfg is None or 'url' not in cfg or not cfg['url']:
         _logger.warning("Pretrained model URL is invalid, using random initialization.")
         return
-    else:
-        state_dict = model_zoo.load_url(cfg['url'], progress=False, map_location='cpu')
+  
+    state_dict = model_zoo.load_url(cfg['url'], progress=False, map_location='cpu')
 
     if filter_fn is not None:
         state_dict = filter_fn(state_dict)
@@ -136,7 +135,7 @@ def load_pretrained(model, cfg=None, num_classes=10, in_chans=3, filter_fn=None,
             state_dict[conv1_name + '.weight'] = conv1_weight
 
     classifier_name = cfg['classifier']
-    if num_classes == 10 and cfg['num_classes'] == 11:
+    if num_classes == 1000 and cfg['num_classes'] == 1001:
         # special case for imagenet trained models with extra background class in pretrained weights
         classifier_weight = state_dict[classifier_name + '.weight']
         state_dict[classifier_name + '.weight'] = classifier_weight[1:]
@@ -150,6 +149,13 @@ def load_pretrained(model, cfg=None, num_classes=10, in_chans=3, filter_fn=None,
 
     model.load_state_dict(state_dict, strict=strict)
 
+def load_pretrained_spectrogram(model, cfg=None, num_classes=10, in_chans=3, filter_fn=None, strict=True):
+    state_dict = load_state_dict(checkpoint_path = './best_model_epoch_7_lr1_5_1600_224.pth')
+
+    if filter_fn is not None:
+        state_dict = filter_fn(state_dict)
+
+    model.load_state_dict(state_dict, strict=strict)
 
 def extract_layer(model, layer):
     layer = layer.split('.')

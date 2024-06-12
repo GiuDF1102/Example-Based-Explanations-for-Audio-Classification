@@ -7,7 +7,7 @@ from vit_model.VIT_LRP import vit_base_patch16_224 as vit_LRP
 from tqdm import tqdm
 
 class FineTuneViT:
-    def __init__(self, model_name, num_classes, dataset_path, batch_size=32, learning_rate=1e-4, num_epochs=10):
+    def __init__(self, model_name, num_classes, dataset_path, batch_size=32, learning_rate=1e-4, num_epochs=20):
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.dataset_path = dataset_path
         self.batch_size = batch_size
@@ -24,14 +24,9 @@ class FineTuneViT:
         self.best_val_accuracy = 0.0
 
     def load_dataset(self):
-        ds = GTZAN()
-
-        total_len = len(ds)
-        train_len = int(0.7 * total_len)
-        val_len = int(0.15 * total_len)
-        test_len = total_len - train_len - val_len
-        
-        train_set, val_set, test_set = random_split(ds, [train_len, val_len, test_len])
+        train_set = GTZAN(mode='train')
+        val_set = GTZAN(mode='test')
+        test_set = GTZAN(mode='test')
         
         train_loader = DataLoader(train_set, batch_size=self.batch_size, shuffle=True)
         val_loader = DataLoader(val_set, batch_size=self.batch_size, shuffle=False)
@@ -66,12 +61,12 @@ class FineTuneViT:
             epoch_loss = running_loss / len(self.train_loader.dataset)
             print(f"Epoch {epoch + 1}/{self.num_epochs}, Loss: {epoch_loss:.4f}")
 
-            val_accuracy = self.validate(mode="validatation")
+            val_accuracy = self.validate(mode="validation")
 
             # Save the model if the validation accuracy is the best we've seen so far
             if val_accuracy > self.best_val_accuracy:
                 self.best_val_accuracy = val_accuracy
-                self.save_model(f"best_model_epoch_{epoch + 1}.pth")
+                self.save_model(f"best_model_epoch_{epoch + 1}_lr1_5_20epochs.pth")
 
     def validate(self, mode="validation"):
         self.model.eval()
@@ -100,6 +95,5 @@ class FineTuneViT:
         print(f"Model saved to {path}")
 
 if __name__ == '__main__':
-    finetuner = FineTuneViT(model_name='vit_base_patch16_224', num_classes=10, dataset_path='../data/images_original')
+    finetuner = FineTuneViT(model_name='vit_base_patch16_224', num_classes=10, dataset_path='../data/')
     finetuner.train()
-    finetuner.validate(mode="test")

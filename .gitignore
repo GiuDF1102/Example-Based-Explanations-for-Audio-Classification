@@ -163,3 +163,4 @@ cython_debug/
 notes.md
 /data
 best_model_*
+data.zip
