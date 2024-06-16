@@ -5,16 +5,15 @@ from torch.utils.data import Dataset
 from torchvision import transforms
 
 class GTZAN(Dataset):
-    def __init__(self, mode):
+    def __init__(self, mode, folder):
         super(GTZAN, self).__init__()
 
-        self.path = f'./data/images_1600_224/{mode}'
+        self.path = f'./data/{folder}/{mode}'
         self.data = []
         self.labels = []
         self.label_map = {}
 
         genres = sorted(os.listdir(self.path))
-        #genres = os.listdir(self.path)
         
         self.label_map = {genre: idx for idx, genre in enumerate(genres)}
         self.genres = genres

@@ -628,7 +628,6 @@ def vit_base_patch16_224(pretrained=False, **kwargs):
     return model
 
 def vit_base_patch16_224_spectrogram(pretrained=False, **kwargs):
-    print("Im here")
     model = VisionTrasformer(
         patch_size=16, embed_dim=768, depth=12, num_heads=12, mlp_ratio=4, qkv_bias=True, num_classes=10, **kwargs)
     model.default_cfg = default_cfgs['vit_base_patch16_224_spectrogram']
