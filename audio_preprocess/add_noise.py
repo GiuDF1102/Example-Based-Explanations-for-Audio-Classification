@@ -24,7 +24,7 @@ def add_noise_to_audio(audio, snr_db):
     return audio + noise
 
 # Define SNR levels for testing
-snr_levels = [5, 10, 15, 20]
+snr_levels = [25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]
 
 for snr in snr_levels:
     for subfolder in os.listdir(BASE_DIR):
